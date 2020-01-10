@@ -11,11 +11,11 @@ library(shiny)
 library(dplyr)
 library(tidyr)
 library(networkD3)
-library(plyr)
+library(here)
 
 LoadEdges <- function(name,type){
     #set your own working directory 
-    WorkingDirectory <- "/home/mat/Rscripts/RepoAnalytics/"
+    WorkingDirectory <-  paste(here(),"/",sep = "")
     path = paste(WorkingDirectory,name,sep = "")
     print(path)
     dane <- read.csv(file = paste(path,type,sep = ""),header = TRUE)%>%as_data_frame()

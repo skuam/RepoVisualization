@@ -114,7 +114,7 @@ SaveDataAsCSV <- function(project_name){
                        import_counts)
   
   #set your own working directory 
-  WorkingDirectory <- "/home/mat/Rscripts/RepoAnalytics/"
+  WorkingDirectory <- paste(here(),"/",sep = "")
   path <- paste(WorkingDirectory,project_name,sep = "")
   print(path)
   dir.create(path)
@@ -129,6 +129,6 @@ MakeGraphData <- function(giturl){
   return(name)
 }
 
-MakeGraphData("https://github.com/kopok2/MachineLearningAlgorithms")
-
+#MakeGraphData("https://github.com/kopok2/MachineLearningAlgorithms")
+MakeGraphData("https://github.com/skuam/PySDM")
 

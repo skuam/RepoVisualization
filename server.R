@@ -53,7 +53,14 @@ PrepareData <- function(repo_name){ # Load data
     edges <- transform(edges,source = as.character(source),target = as.character(target))
     
     edges$source[] <- nodes$project_names[match(edges$source,nodes$X)]
-    
+    tmp <- edges$target    
+    edges$target[] <- nodes$project_names[match(edges$target,nodes$X, nomatch = edges$target)]
+    for(i in seq(length(tmp))){
+        if(is.na(edges$target[i])){
+            edges$target[i] <- tmp[i]
+        }
+    }
+
     nodes$X = NULL
     
     #transform data to form aceptable by graph
@@ -74,8 +81,12 @@ PrepareData <- function(repo_name){ # Load data
     nodes = mutate(nodes, group = import_counts)
     return(list(links,nodes))
 }
+#load all datasets into memory
 graph_machine <-PrepareData("MachineLearningAlgorithms")
 graph_SDM <- PrepareData("PySDM")
+graph_Pyphen <- PrepareData("Pyphen")
+graph_python3cookbook <- PrepareData("python3cookbook")
+graph_ImageAI <- PrepareData("ImageAI")
 
 if (interactive()) {
 # Define server logic required to draw a histogram
@@ -97,6 +108,7 @@ shinyServer(function(input, output) {
               legend = input$legend1,
               linkDistance = input$distance1
     ))
+    
     output$net2 <- renderForceNetwork(forceNetwork(Links =  graph_machine[[1]] ,Nodes = graph_machine[[2]],
               Source = "source",
               Target = "target",
@@ -109,6 +121,46 @@ shinyServer(function(input, output) {
               colourScale = JS("d3.scaleOrdinal(d3.schemeCategory10);"), fontSize = 40,
               opacity = input$opacity2,
               legend = input$legend2
+    ))
+    
+    output$net3 <- renderForceNetwork(forceNetwork(Links =  graph_Pyphen[[1]] ,Nodes = graph_Pyphen[[2]],
+               Source = "source",
+               Target = "target",
+               NodeID = "name",
+               Group = input$group3,
+               Nodesize = "size",
+               charge = input$charge3,
+               zoom = T,
+               linkDistance = input$distance3,
+               colourScale = JS("d3.scaleOrdinal(d3.schemeCategory10);"), fontSize = 40,
+               opacity = input$opacity3,
+               legend = input$legend3
+    ))
+    output$net4 <- renderForceNetwork(forceNetwork(Links =  graph_python3cookbook[[1]] ,Nodes = graph_python3cookbook[[2]],
+               Source = "source",
+               Target = "target",
+               NodeID = "name",
+               Group = input$group4,
+               Nodesize = "size",
+               charge = input$charge4,
+               zoom = T,
+               linkDistance = input$distance4,
+               colourScale = JS("d3.scaleOrdinal(d3.schemeCategory10);"), fontSize = 40,
+               opacity = input$opacity4,
+               legend = input$legend4
+    ))
+    output$net5 <- renderForceNetwork(forceNetwork(Links =  graph_ImageAI[[1]] ,Nodes = graph_ImageAI[[2]],
+               Source = "source",
+               Target = "target",
+               NodeID = "name",
+               Group = input$group5,
+               Nodesize = "size",
+               charge = input$charge5,
+               zoom = T,
+               linkDistance = input$distance5,
+               colourScale = JS("d3.scaleOrdinal(d3.schemeCategory10);"), fontSize = 40,
+               opacity = input$opacity5,
+               legend = input$legend5
     ))
     
 })

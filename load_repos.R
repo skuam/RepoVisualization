@@ -130,5 +130,7 @@ MakeGraphData <- function(giturl){
 }
 
 #MakeGraphData("https://github.com/kopok2/MachineLearningAlgorithms")
-MakeGraphData("https://github.com/skuam/PySDM")
-
+#MakeGraphData("https://github.com/skuam/PySDM")
+#MakeGraphData("https://github.com/Kozea/Pyphen")
+#MakeGraphData("https://github.com/yidao620c/python3-cookbook")
+#MakeGraphData("https://github.com/OlafenwaMoses/ImageAI")
